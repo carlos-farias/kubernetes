@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-html-config
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Hello World 2!</title>
+    </head>
+    <body>
+        <h1>Hello, World 2!</h1>
+    </body>
+    </html>

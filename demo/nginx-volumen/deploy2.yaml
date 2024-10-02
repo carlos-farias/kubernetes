@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment-2
+  labels:
+    app: nginx2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx2
+  template:
+    metadata:
+      labels:
+        app: nginx2
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        volumeMounts:
+        - name: nginx-html-volume
+          mountPath: /usr/share/nginx/html/index.html
+          subPath: index.html
+        ports:
+        - containerPort: 80
+      volumes:
+      - name: nginx-html-volume
+        configMap:
+          name: nginx-html-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service-2
+spec:
+  selector:
+    app: nginx2
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 80
+      name: "http"
+  type: NodePort
